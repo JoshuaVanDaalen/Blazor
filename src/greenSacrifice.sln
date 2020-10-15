@@ -5,6 +5,14 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor", "greenSacrifice\greenSacrifice.Blazor\greenSacrifice.Blazor.csproj", "{0EB2D211-A315-4EB2-BBB7-597F0B6270B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor.Common", "greenSacrifice\greenSacrifice.Blazor.Common\greenSacrifice.Blazor.Common.csproj", "{E13ABB07-0F9F-40FC-B422-3D65FA396049}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor.Models", "greenSacrifice\greenSacrifice.Blazor.Models\greenSacrifice.Blazor.Models.csproj", "{CF5C9AED-10AC-42D6-9673-3DD387DFCE29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor.Repo", "greenSacrifice\greenSacrifice.Blazor.Repo\greenSacrifice.Blazor.Repo.csproj", "{8C6F9E96-DC22-4A90-BF38-CED7B3504254}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor.Svc", "greenSacrifice\greenSacrifice.Blazor.Svc\greenSacrifice.Blazor.Svc.csproj", "{9DF002C5-5363-473C-8EF3-BAD8395F4E36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{0EB2D211-A315-4EB2-BBB7-597F0B6270B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EB2D211-A315-4EB2-BBB7-597F0B6270B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EB2D211-A315-4EB2-BBB7-597F0B6270B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E13ABB07-0F9F-40FC-B422-3D65FA396049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E13ABB07-0F9F-40FC-B422-3D65FA396049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E13ABB07-0F9F-40FC-B422-3D65FA396049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E13ABB07-0F9F-40FC-B422-3D65FA396049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5C9AED-10AC-42D6-9673-3DD387DFCE29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5C9AED-10AC-42D6-9673-3DD387DFCE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5C9AED-10AC-42D6-9673-3DD387DFCE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5C9AED-10AC-42D6-9673-3DD387DFCE29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6F9E96-DC22-4A90-BF38-CED7B3504254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6F9E96-DC22-4A90-BF38-CED7B3504254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6F9E96-DC22-4A90-BF38-CED7B3504254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6F9E96-DC22-4A90-BF38-CED7B3504254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
