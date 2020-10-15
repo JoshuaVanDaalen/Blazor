@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\greenSacrifice.Blazor.Repo\greenSacrifice.Blazor.Repo.csproj" />
+  </ItemGroup>
+
 </Project>

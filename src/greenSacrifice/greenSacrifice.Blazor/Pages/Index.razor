@@ -1,6 +1,25 @@
 ﻿@page "/"
+@*@model greenSacrifice.Blazor.Models.Web.ViewModels.HelloWorld.DemoMessageViewModel*@
 
 <h1>Hello, world!</h1>
+@if (DemoMessageViewModel == null)
+{
+    <p> Welcome to your new app </p>
+}
+else
+{
+    <p> Here are messages saved in the database </p>
+    <p> @DemoMessageViewModel.Message </p>
+}
+@code{
+    [CascadingParameter]
+    public HelloWorldRepo HelloWorldRepo { get; set; }
 
-Welcome to your new app.
+    [CascadingParameter]
+    public DemoMessageViewModel DemoMessageViewModel { get; set; }
 
+    protected async override Task OnInitializedAsync()
+    {
+        DemoMessageViewModel = HelloWorldRepo.GetDemoMessageById(0);
+    }
+}

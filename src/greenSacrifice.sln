@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor.Repo"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greenSacrifice.Blazor.Svc", "greenSacrifice\greenSacrifice.Blazor.Svc\greenSacrifice.Blazor.Svc.csproj", "{9DF002C5-5363-473C-8EF3-BAD8395F4E36}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "greenSacrifice.Blazor.Database", "greenSacrifice\greenSacrifice.Blazor.Database\greenSacrifice.Blazor.Database.sqlproj", "{A202DD5C-3452-4088-81A9-551813D2281D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DF002C5-5363-473C-8EF3-BAD8395F4E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A202DD5C-3452-4088-81A9-551813D2281D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A202DD5C-3452-4088-81A9-551813D2281D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A202DD5C-3452-4088-81A9-551813D2281D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A202DD5C-3452-4088-81A9-551813D2281D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A202DD5C-3452-4088-81A9-551813D2281D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A202DD5C-3452-4088-81A9-551813D2281D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
