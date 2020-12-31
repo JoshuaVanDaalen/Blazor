@@ -16,6 +16,17 @@ using Microsoft.Extensions.Hosting;
 
 namespace greenSacrifice.Blazor
 {
+    public class AzureADOptionsContainer
+    {
+        public AzureADOptions _azureADStandard;
+        public AzureADOptions _azureADPrivileged;
+
+        public AzureADOptionsContainer(AzureADOptions azureADStandard, AzureADOptions azureADPrivileged)
+        {
+            _azureADStandard = azureADStandard;
+            _azureADPrivileged = azureADPrivileged;
+        }
+    }
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -36,20 +47,31 @@ namespace greenSacrifice.Blazor
             //conn = conn.Replace("{{SQLDATABASE}}", "greenSacrifice-Blazor-Local");
             //}
             //else { 
-            conn = conn.Replace("{{SQLSERVER}}",  @"sql-greensacrifice-blazor-dev.database.windows.net");
+            conn = conn.Replace("{{SQLSERVER}}", @"sql-greensacrifice-blazor-dev.database.windows.net");
             conn = conn.Replace("{{SQLDATABASE}}", "sqldb-greensacrifice-blazor-dev");
             services.AddDbContextPool<HelloWorldDbContext>(options =>
                 options.UseSqlServer(conn));
 
             // azure ad options
-            var azureAdOptions = new AzureADOptions();
-            //Configuration.Bind("AzureADStandard", azureAdOptions);
-            Configuration.Bind("AzureADPrivileged", azureAdOptions);
-            if (azureAdOptions == null)
+            var azureADStandard = new AzureADOptions();
+            var azureADPrivileged = new AzureADOptions();
+
+            azureADStandard = (AzureADOptions)Configuration.GetSection("AzureADStandard");
+            azureADPrivileged = (AzureADOptions)Configuration.GetSection("AzureADPrivileged");
+            Configuration.Bind("AzureADStandard", azureADStandard);
+            Configuration.Bind("AzureADPrivileged", azureADPrivileged);
+
+
+            AzureADOptionsContainer azureAdOptions = new(azureADStandard, azureADPrivileged);
+
+            if (azureADStandard == null || azureADPrivileged == null)
             {
-                throw new Exception("Missing Configuration for AzureAd");
+                throw new Exception("Missing Configuration for azureADStandard or azureADPrivileged");
             }
+
             services.AddSingleton(azureAdOptions);
+
+
             services.AddScoped<HelloWorldDbContext>();
             services.AddScoped<HelloWorldRepo>();
 

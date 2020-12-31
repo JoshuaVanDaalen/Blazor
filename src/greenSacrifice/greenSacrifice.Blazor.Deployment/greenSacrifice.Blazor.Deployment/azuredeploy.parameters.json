@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlServerName": {
+      "value": "$(sqlServerName)" // sql-greensacrifice-blazor-dev
+    },
+    "sqlDatabaseName": {
+      "value": "$(sqlDatabaseName)" // sqldb-greensacrifice-blazor-dev
+    },
+    "sqlServerAdministrators": {
+      "value": "$(sqlServerAdministrators)" // sql-greensacrifice-blazor-dbowner-dev
+    },
+    "sqlServerAdministratorsGroupId": {
+      "value": "$(sqlServerAdministratorsGroupId)" // 172a5744-9b13-4b88-ab06-aef9d5e95aaf
+    },
+    "azureTenantId": {
+      "value": "$(azureTenantId)" // Add your own
+    },
+    "location": {
+      "value": "$(location)" // australiasoutheast
+    },
+    "environment": {
+      "value": "$(environment)" // DEV
+    },
+    "project": {
+      "value": "$(project)" // greenSacrifice.Blazor
+    }
+  }
+}
