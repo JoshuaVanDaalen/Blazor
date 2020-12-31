@@ -1,0 +1,98 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dateTimeUTC": {
+      "type": "String",
+      "defaultValue": "[concat(utcnow('yyyy-MM-dd THH:mm'), ' (UTC)')]"
+    },
+    "sqlServerName": {
+      "type": "String"
+    },
+    "sqlDatabaseName": {
+      "type": "String"
+    },
+    "sqlServerAdministrators": {
+      "type": "String"
+    },
+    "sqlServerAdministratorsGroupId": {
+      "type": "String"
+    },
+    "azureTenantId": {
+      "type": "String"
+    },
+    "location": {
+      "type": "String"
+    },
+    "environment": {
+      "type": "String"
+    },
+    "project": {
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+
+    {
+      "name": "[parameters('sqlServerName')]",
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2019-06-01-preview",
+      "location": "australiasoutheast",
+      "tags": {
+        "Owner": "Joshua Van Daalen",
+        "Project": "[parameters('project')]",
+        "Created Date": "[parameters('dateTimeUTC')]",
+        "Environment": "[parameters('environment')]"
+      },
+      "properties": {
+        "administratorLogin": "Super",
+        "minimalTlsVersion": "1.2",
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers/administrators",
+      "apiVersion": "2019-06-01-preview",
+      "name": "[concat(parameters('sqlServerName'), '/ActiveDirectory')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+      ],
+      "properties": {
+        "administratorType": "ActiveDirectory",
+        "login": "[parameters('sqlServerAdministrators')]",
+        "sid": "[parameters('sqlServerAdministratorsGroupId')]",
+        "tenantId": "[parameters('azureTenantId')]"
+      }
+    },
+    {
+      "name": "[concat(parameters('sqlServerName'), parameters('sqlDatabaseName'))]",
+      "type": "Microsoft.Sql/servers/databases",
+      "apiVersion": "2020-08-01-preview",
+      "location": "parameters('location')",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+      ],
+      "tags": {
+        "Owner": "Joshua Van Daalen",
+        "Project": "[parameters('project')]",
+        "Created Date": "[parameters('dateTimeUTC')]",
+        "Environment": "[parameters('environment')]"
+      },
+      "sku": {
+        "name": "Basic",
+        "tier": "Basic",
+        "capacity": 5
+      },
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": 2147483648,
+        "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+        "zoneRedundant": false,
+        "readScale": "Disabled",
+        "storageAccountType": "GRS"
+      }
+    }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,546 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vulnerabilityAssessments_Default_storageContainerPath": {
+            "type": "SecureString"
+        },
+        "servers_sql_greensacrifice_blazor_dev_name": {
+            "defaultValue": "sql-greensacrifice-blazor-dev",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2019-06-01-preview",
+            "name": "[parameters('servers_sql_greensacrifice_blazor_dev_name')]",
+            "location": "australiasoutheast",
+            "tags": {
+                "Owner": "Joshua Van Daalen",
+                "Project": "greenSacrifice.Blazor",
+                "Created Date": "15-10-2020"
+            },
+            "kind": "v12.0",
+            "properties": {
+                "administratorLogin": "Super",
+                "version": "12.0",
+                "minimalTlsVersion": "1.2",
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/administrators",
+            "apiVersion": "2019-06-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/ActiveDirectory')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "administratorType": "ActiveDirectory",
+                "login": "sql-greensacrifice-blazor-owner-dev",
+                "sid": "3771dbe1-a92a-4b11-9daa-9b12a4770d4d",
+                "tenantId": "c3bc6019-2458-4715-b8eb-c971e2d6ab22"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/CreateIndex')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/DbParameterization')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/DefragmentIndex')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/DropIndex')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/ForceLastGoodPlan')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/auditingPolicies",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Default')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "auditingState": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/auditingSettings",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 0,
+                "auditActionsAndGroups": [],
+                "isStorageSecondaryKeyInUse": false,
+                "isAzureMonitorTargetEnabled": false,
+                "state": "Disabled",
+                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/azureADOnlyAuthentications",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "azureADOnlyAuthentication": false
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev')]",
+            "location": "australiasoutheast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "tags": {
+                "Owner": "Joshua Van Daalen",
+                "Project": "greenSacrifice.Blazor",
+                "Environment": "DEV",
+                "Created Date": "15-10-2020"
+            },
+            "sku": {
+                "name": "Basic",
+                "tier": "Basic",
+                "capacity": 5
+            },
+            "kind": "v12.0,user",
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 2147483648,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+                "zoneRedundant": false,
+                "readScale": "Disabled",
+                "storageAccountType": "GRS"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/Default')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "auditingState": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingSettings",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 0,
+                "isAzureMonitorTargetEnabled": false,
+                "state": "Disabled",
+                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/extendedAuditingSettings",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 0,
+                "isAzureMonitorTargetEnabled": false,
+                "state": "Disabled",
+                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/Default')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "state": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "state": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/current')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "status": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/vulnerabilityAssessments",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/master/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "recurringScans": {
+                    "isEnabled": false,
+                    "emailSubscriptionAdmins": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/encryptionProtector",
+            "apiVersion": "2015-05-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/current')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "kind": "servicemanaged",
+            "properties": {
+                "serverKeyName": "ServiceManaged",
+                "serverKeyType": "ServiceManaged"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/extendedAuditingSettings",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 0,
+                "auditActionsAndGroups": [],
+                "isStorageSecondaryKeyInUse": false,
+                "isAzureMonitorTargetEnabled": false,
+                "state": "Disabled",
+                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2015-05-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/AllowAllWindowsAzureIps')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "0.0.0.0"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2015-05-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/ClientIPAddress_2020-12-13_03:45:42')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "175.45.149.0",
+                "endIpAddress": "175.45.149.255"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2015-05-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Josh')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "175.45.149.90",
+                "endIpAddress": "175.45.149.90"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/keys",
+            "apiVersion": "2015-05-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/ServiceManaged')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "kind": "servicemanaged",
+            "properties": {
+                "serverKeyType": "ServiceManaged"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/securityAlertPolicies",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "state": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/vulnerabilityAssessments",
+            "apiVersion": "2018-06-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "recurringScans": {
+                    "isEnabled": false,
+                    "emailSubscriptionAdmins": true
+                },
+                "storageContainerPath": "[parameters('vulnerabilityAssessments_Default_storageContainerPath')]"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/CreateIndex')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/DbParameterization')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/DefragmentIndex')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/DropIndex')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/ForceLastGoodPlan')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "autoExecuteValue": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/Default')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "auditingState": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingSettings",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 0,
+                "isAzureMonitorTargetEnabled": false,
+                "state": "Disabled",
+                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "weeklyRetention": "PT0S",
+                "monthlyRetention": "PT0S",
+                "yearlyRetention": "PT0S",
+                "weekOfYear": 0
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
+            "apiVersion": "2017-10-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 7
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/extendedAuditingSettings",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "retentionDays": 0,
+                "isAzureMonitorTargetEnabled": false,
+                "state": "Disabled",
+                "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/Default')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "state": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "state": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
+            "apiVersion": "2014-04-01",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/current')]",
+            "location": "Australia Southeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "status": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/vulnerabilityAssessments",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[concat(parameters('servers_sql_greensacrifice_blazor_dev_name'), '/sqldb-greensacrifice-blazor-dev/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_sql_greensacrifice_blazor_dev_name'), 'sqldb-greensacrifice-blazor-dev')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_greensacrifice_blazor_dev_name'))]"
+            ],
+            "properties": {
+                "recurringScans": {
+                    "isEnabled": false,
+                    "emailSubscriptionAdmins": true
+                }
+            }
+        }
+    ]
+}
