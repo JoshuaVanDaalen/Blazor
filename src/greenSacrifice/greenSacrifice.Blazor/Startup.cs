@@ -43,7 +43,8 @@ namespace greenSacrifice.Blazor
 
             // azure ad options
             var azureAdOptions = new AzureADOptions();
-            Configuration.Bind("AzureAD", azureAdOptions);
+            //Configuration.Bind("AzureADStandard", azureAdOptions);
+            Configuration.Bind("AzureADPrivileged", azureAdOptions);
             if (azureAdOptions == null)
             {
                 throw new Exception("Missing Configuration for AzureAd");

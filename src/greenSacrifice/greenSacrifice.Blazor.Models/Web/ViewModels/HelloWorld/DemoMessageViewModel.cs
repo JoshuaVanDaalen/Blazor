@@ -8,6 +8,7 @@ namespace greenSacrifice.Blazor.Models.Web.ViewModels.HelloWorld
     {
         public int Id { get; set; }
         public string Message { get; set; }
+        public string HiddenMessage { get; set; }
         public DateTime CreatedUTC { get; set; }
     }
 }

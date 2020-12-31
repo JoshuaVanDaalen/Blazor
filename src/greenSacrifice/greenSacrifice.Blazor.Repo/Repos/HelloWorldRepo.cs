@@ -20,6 +20,7 @@ namespace greenSacrifice.Blazor.Repo.Repos
                 {
                     Id = 0,
                     Message = "InMemory Message",
+                    HiddenMessage = "InMemory Hidden Message",
                     CreatedUTC = DateTime.UtcNow,
                 };
                 return viewModel;

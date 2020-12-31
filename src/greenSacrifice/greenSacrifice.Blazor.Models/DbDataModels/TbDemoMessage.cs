@@ -7,6 +7,7 @@ namespace greenSacrifice.Blazor.Models.DbDataModels
     {
         public int Id { get; set; }
         public string Message { get; set; }
+        public string HiddenMessage { get; set; }
         public DateTime CreatedUTC { get; set; }
         public DemoMessageViewModel ToViewModel()
         {
@@ -14,6 +15,7 @@ namespace greenSacrifice.Blazor.Models.DbDataModels
             {
                 Id = Id,
                 Message = Message,
+                HiddenMessage = HiddenMessage,
                 CreatedUTC = DateTime.UtcNow,
             };
         }
