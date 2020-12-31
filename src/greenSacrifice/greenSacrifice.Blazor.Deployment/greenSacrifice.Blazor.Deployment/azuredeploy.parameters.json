@@ -15,7 +15,7 @@
       "value": "$(sqlServerAdministratorsGroupId)" // 172a5744-9b13-4b88-ab06-aef9d5e95aaf
     },
     "azureTenantId": {
-      "value": "$(azureTenantId)" // 
+      "value": "$(azureTenantId)" // Add your own
     },
     "location": {
       "value": "$(location)" // australiasoutheast
